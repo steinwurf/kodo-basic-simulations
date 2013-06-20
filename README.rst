@@ -39,7 +39,9 @@ Want an executable?
 We use a buildbot to build and test the code on a number of different platforms.
 If you just want an executable to play with our buildbots upload theirs here:
 
-http://176.28.49.184:12344/labs/
+http://176.28.49.184:12344/bin
+
+Look in the folder ``kodo-basic-simulations``.
 
 
 
