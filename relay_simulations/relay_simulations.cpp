@@ -13,6 +13,15 @@
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
 
+// Helper function to convert to string
+template<class T>
+std::string to_string(T t)
+{
+    std::stringstream ss;
+    ss << t;
+    return ss.str();
+}
+
 // The encoders and decoders that we use from the Kodo library
 typedef kodo::full_rlnc_encoder<fifi::binary> Encoder;
 typedef kodo::full_rlnc_decoder<fifi::binary> Decoder;
@@ -128,7 +137,7 @@ public:
 
         for(uint32_t i = 0; i < relays; ++i)
         {
-            auto relay = m_factory->build_relay("relay"+std::to_string(i));
+            auto relay = m_factory->build_relay("relay"+to_string(i));
 
             channel_source_relay->add_output(relay);
             relay->add_output(channel_relay_sink);
