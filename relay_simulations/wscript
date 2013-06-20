@@ -4,7 +4,7 @@
 
 def build(bld):
 
-    bld.program(features = 'cxx',
+    bld.program(features = 'cxx test',
                 source   = ['relay_simulations.cpp'],
                 target   = 'relay_simulations',
                 includes = '..',
