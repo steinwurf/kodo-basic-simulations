@@ -74,7 +74,7 @@ public:
         {
             if(!results.has_column(c.first))
             {
-                results.add_column(c.first, uint32_t(0));
+                results.add_column(c.first);
             }
 
             results.set_value(c.first,c.second);
