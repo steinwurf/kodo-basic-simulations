@@ -11,7 +11,7 @@
 #include <vector>
 #include <map>
 
-#include <gauge/table.hpp>
+#include <tables/table.hpp>
 
 #include "packet.hpp"
 #include "sink.hpp"
@@ -68,7 +68,7 @@ public:
         }
     }
 
-    void store_run(gauge::table& results)
+    void store_run(tables::table& results)
     {
         for(auto& c : m_counter)
         {

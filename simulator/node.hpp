@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <gauge/table.hpp>
+#include <tables/table.hpp>
 
 /// The node class is the basic building block in this simple
 /// simulation tool. The node has and id and input / output functions.
@@ -23,7 +23,7 @@ public:
     virtual void receive(packet payload) = 0;
     virtual void tick() = 0;
 
-    virtual void store_run(gauge::table& /*results*/)
+    virtual void store_run(tables::table& /*results*/)
     { }
 
     // Adds a receiver to the output

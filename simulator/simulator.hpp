@@ -14,7 +14,7 @@
 #include <sstream>
 #include <map>
 
-#include <gauge/table.hpp>
+#include <tables/table.hpp>
 
 #include "packet.hpp"
 #include "node.hpp"

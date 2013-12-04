@@ -51,7 +51,13 @@ def options(opt):
         resolve.ResolveGitMajorVersion(
             name = 'gauge',
             git_repository = 'github.com/steinwurf/cxx-gauge.git',
-            major_version = 5))
+            major_version = 6))
+
+    bundle.add_dependency(opt,
+        resolve.ResolveGitMajorVersion(
+            name = 'tables',
+            git_repository = 'github.com/steinwurf/tables.git',
+            major_version = 4))
 
     bundle.add_dependency(opt,
         resolve.ResolveGitMajorVersion(
@@ -80,6 +86,7 @@ def configure(conf):
         recurse_helper(conf, 'sak')
         recurse_helper(conf, 'fifi')
         recurse_helper(conf, 'gauge')
+        recurse_helper(conf, 'tables')
         recurse_helper(conf, 'kodo')
 
 def build(bld):
@@ -93,6 +100,7 @@ def build(bld):
         recurse_helper(bld, 'sak')
         recurse_helper(bld, 'fifi')
         recurse_helper(bld, 'gauge')
+        recurse_helper(bld, 'tables')
         recurse_helper(bld, 'kodo')
 
     bld.recurse('relay_simulations')
