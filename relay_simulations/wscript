@@ -10,7 +10,8 @@ def build(bld):
                 includes = '..',
                 use      = ['kodo_includes', 'boost_includes',
                             'fifi_includes', 'sak_includes',
-                            'boost_program_options', 'gauge'])
+                            'boost_program_options', 'gauge',
+                            'tables'])
 
 
 

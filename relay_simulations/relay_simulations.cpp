@@ -9,9 +9,10 @@
 #include "../simulator/simulator.hpp"
 
 #include <gauge/gauge.hpp>
-#include <gauge/python_printer.hpp>
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
+#include <gauge/json_printer.hpp>
+#include <gauge/python_printer.hpp>
 
 // Helper function to convert to string
 template<class T>
@@ -76,7 +77,7 @@ public:
     { }
 
     /// Store the results from a run in the simulator
-    void store_run(gauge::table& results)
+    void store_run(tables::table& results)
     {
         m_scheduler->store_run(results);
     }
@@ -348,10 +349,11 @@ int main(int argc, const char *argv[])
         std::make_shared<gauge::console_printer>());
 
     gauge::runner::instance().printers().push_back(
-        std::make_shared<gauge::python_printer>());
-
-    gauge::runner::instance().printers().push_back(
         std::make_shared<gauge::csv_printer>());
+    gauge::runner::instance().printers().push_back(
+        std::make_shared<gauge::json_printer>());
+    gauge::runner::instance().printers().push_back(
+        std::make_shared<gauge::python_printer>());
 
     gauge::runner::run_benchmarks(argc, argv);
 
