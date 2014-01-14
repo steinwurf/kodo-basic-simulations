@@ -8,7 +8,7 @@
 #include <vector>
 
 #include <boost/shared_ptr.hpp>
-#include <gauge/table.hpp>
+#include <tables/table.hpp>
 
 #include "node.hpp"
 
@@ -33,7 +33,7 @@ public:
         }
     }
 
-    void store_run(gauge::table& results)
+    void store_run(tables::table& results)
     {
         for(auto& n: m_nodes)
         {

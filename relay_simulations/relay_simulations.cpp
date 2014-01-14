@@ -76,7 +76,7 @@ public:
     { }
 
     /// Store the results from a run in the simulator
-    void store_run(gauge::table& results)
+    void store_run(tables::table& results)
     {
         m_scheduler->store_run(results);
     }

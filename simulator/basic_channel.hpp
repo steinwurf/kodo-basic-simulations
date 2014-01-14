@@ -8,7 +8,7 @@
 #include <map>
 #include <vector>
 
-#include <gauge/table.hpp>
+#include <tables/table.hpp>
 
 #include "packet.hpp"
 #include "random_bool.hpp"
@@ -50,13 +50,14 @@ public:
 
     }
 
-    void store_run(gauge::table& results)
+    void store_run(tables::table& results)
     {
         for(auto& c : m_counter)
         {
             if(!results.has_column(c.first))
             {
-                results.add_column(c.first, uint32_t(0));
+                results.add_column(c.first);
+                results.set_default_value(c.first, uint32_t(0));
             }
 
             results.set_value(c.first,c.second);
