@@ -342,17 +342,9 @@ BENCHMARK_F(relay_fixture16, Relay, binary16, 10)
 
 int main(int argc, const char *argv[])
 {
-    srand((uint32_t)time(0));
+    srand(static_cast<uint32_t>(time(0)));
 
-    gauge::runner::instance().printers().push_back(
-        std::make_shared<gauge::console_printer>());
-
-    gauge::runner::instance().printers().push_back(
-        std::make_shared<gauge::python_printer>());
-
-    gauge::runner::instance().printers().push_back(
-        std::make_shared<gauge::csv_printer>());
-
+    gauge::runner::add_default_printers();
     gauge::runner::run_benchmarks(argc, argv);
 
     return 0;
