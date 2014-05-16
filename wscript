@@ -60,7 +60,6 @@ def options(opt):
 
     opt.load('wurf_configure_output')
     opt.load('wurf_dependency_bundle')
-    opt.load('wurf_dependency_resolve')
     opt.load('wurf_tools')
 
 
