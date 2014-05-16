@@ -2,15 +2,10 @@
 # encoding: utf-8
 
 
-def build(bld):
-
-    bld.program(features = 'cxx test',
-                source   = ['relay_simulations.cpp'],
-                target   = 'relay_simulations',
-                includes = '..',
-                use      = ['kodo_includes', 'boost_includes',
-                            'fifi_includes', 'sak_includes',
-                            'boost_program_options', 'gauge'])
-
-
-
+bld.program(
+    features='cxx test',
+    source=['relay_simulations.cpp'],
+    target='relay_simulations',
+    includes='..',
+    use=['kodo_includes', 'boost_includes', 'fifi_includes', 'sak_includes',
+         'boost_program_options', 'gauge'])
