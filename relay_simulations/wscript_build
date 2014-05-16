@@ -1,0 +1,11 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+
+bld.program(
+    features='cxx test',
+    source=['relay_simulations.cpp'],
+    target='relay_simulations',
+    includes='..',
+    use=['kodo_includes', 'boost_includes', 'fifi_includes', 'sak_includes',
+         'boost_program_options', 'gauge'])
