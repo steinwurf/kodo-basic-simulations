@@ -4,6 +4,9 @@ About
 This repository contains some basic Network Coding simulations based on the
 kodo library.
 
+.. image:: http://buildbot.steinwurf.dk/svgstatus?project=kodo-basic-simulations
+    :target: http://buildbot.steinwurf.dk/stats?projects=kodo-basic-simulations
+
 Build
 =====
 
