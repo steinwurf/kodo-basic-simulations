@@ -6,6 +6,7 @@ of every change, see the Git log.
 
 Latest
 ------
+* Major: Upgrade to tables 5
 * Minor: Update to waf 1.8.0-pre1
 * Minor: Made python files comply with pep8
 * Major: Bump dependency to Fifi version 10.x.y
