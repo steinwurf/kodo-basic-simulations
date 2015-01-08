@@ -300,7 +300,7 @@ BENCHMARK_OPTION(relay_line)
 
 typedef relay_simulation<Encoder, Decoder> relay_fixture;
 
-BENCHMARK_F(relay_fixture, Relay, binary, 10)
+BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
 {
     RUN{
 
@@ -314,7 +314,7 @@ BENCHMARK_F(relay_fixture, Relay, binary, 10)
 
 typedef relay_simulation<Encoder8, Decoder8> relay_fixture8;
 
-BENCHMARK_F(relay_fixture8, Relay, binary8, 10)
+BENCHMARK_F_INLINE(relay_fixture8, Relay, binary8, 10)
 {
     RUN{
 
@@ -328,7 +328,7 @@ BENCHMARK_F(relay_fixture8, Relay, binary8, 10)
 
 typedef relay_simulation<Encoder16, Decoder16> relay_fixture16;
 
-BENCHMARK_F(relay_fixture16, Relay, binary16, 10)
+BENCHMARK_F_INLINE(relay_fixture16, Relay, binary16, 10)
 {
     RUN{
 

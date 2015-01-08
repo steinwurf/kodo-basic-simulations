@@ -31,7 +31,7 @@ def options(opt):
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='gauge',
         git_repository='github.com/steinwurf/cxx-gauge.git',
-        major_version=7))
+        major_version=9))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='gtest',
