@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-APPNAME = 'kodo_relay_simulations'
+APPNAME = 'kodo_basic_simulations'
 VERSION = '1.0.0'
 
 
