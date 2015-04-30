@@ -1,3 +1,15 @@
+License
+=======
+
+A valid Kodo license is required if you wish to use and install this library.
+
+Please request a license by **filling out the license request** form_.
+
+Kodo is available under a research- and education-friendly license,
+see the details in the LICENSE.rst file.
+
+.. _form: http://steinwurf.com/license/
+
 About
 =====
 
