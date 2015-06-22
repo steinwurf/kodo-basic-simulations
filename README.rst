@@ -40,11 +40,9 @@ After configure run the following command to build::
 Run
 ===
 
-After building you may run e.g. the ``relay_simulations`` binary::
+After building, you may run the ``relay_simulations`` binary that was generated
+in the ``build`` folder (the actual path and extension depend on your OS)::
 
   ./build/linux/relay_simulations/relay_simulations
-
-
-
-
-
+  ./build/darwin/relay_simulations/relay_simulations
+  ./build/win32/relay_simulations/relay_simulations.exe

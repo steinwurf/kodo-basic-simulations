@@ -34,11 +34,6 @@ def options(opt):
         major_version=9))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
-        name='gtest',
-        git_repository='github.com/steinwurf/external-gtest.git',
-        major_version=2))
-
-    bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='kodo',
         git_repository='github.com/steinwurf/kodo.git',
         major_version=15))
@@ -78,7 +73,6 @@ def configure(conf):
         recurse_helper(conf, 'boost')
         recurse_helper(conf, 'fifi')
         recurse_helper(conf, 'gauge')
-        recurse_helper(conf, 'gtest')
         recurse_helper(conf, 'kodo')
         recurse_helper(conf, 'sak')
         recurse_helper(conf, 'tables')
@@ -93,7 +87,6 @@ def build(bld):
         recurse_helper(bld, 'boost')
         recurse_helper(bld, 'fifi')
         recurse_helper(bld, 'gauge')
-        recurse_helper(bld, 'gtest')
         recurse_helper(bld, 'kodo')
         recurse_helper(bld, 'sak')
         recurse_helper(bld, 'tables')
