@@ -87,7 +87,6 @@ def build(bld):
         recurse_helper(bld, 'boost')
         recurse_helper(bld, 'fifi')
         recurse_helper(bld, 'gauge')
-        recurse_helper(bld, 'gtest')
         recurse_helper(bld, 'kodo')
         recurse_helper(bld, 'sak')
         recurse_helper(bld, 'tables')
