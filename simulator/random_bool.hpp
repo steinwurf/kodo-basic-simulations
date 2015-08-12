@@ -16,7 +16,8 @@ public:
 
     /// @param random_generator The random generator to use
     /// @param true_probability The probability of generation a 1
-    random_bool(boost::random::mt19937 &random_generator, double true_probability)
+    random_bool(boost::random::mt19937 &random_generator,
+                double true_probability)
         : m_random_generator(random_generator),
           m_distribution(true_probability)
     { }
@@ -36,6 +37,3 @@ private:
     boost::random::bernoulli_distribution<> m_distribution;
 
 };
-
-
-

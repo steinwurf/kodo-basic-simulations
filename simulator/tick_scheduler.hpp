@@ -18,7 +18,7 @@ class tick_scheduler
 {
 public:
 
-    typedef boost::shared_ptr<node> node_ptr;
+    typedef std::shared_ptr<node> node_ptr;
 
     void add_node(const node_ptr &node)
     {
@@ -44,4 +44,3 @@ public:
     // Stores the output receivers
     std::vector<node_ptr> m_nodes;
 };
-

@@ -23,7 +23,7 @@ class basic_sink : public sink
 public:
 
     basic_sink(const std::string &id,
-               const typename Decoder::pointer &decoder)
+               const std::shared_ptr<Decoder> &decoder)
         : sink(id),
           m_decoder(decoder)
     {
@@ -56,7 +56,7 @@ public:
                   &m_decode_buffer[0]);
 
         uint32_t rank = m_decoder->rank();
-        m_decoder->decode(&m_decode_buffer[0]);
+        m_decoder->read_payload(&m_decode_buffer[0]);
 
         if(m_decoder->rank() > rank)
         {
@@ -94,11 +94,9 @@ private:
     std::vector<uint8_t> m_decode_buffer;
 
     // The decoder
-    typename Decoder::pointer m_decoder;
+    std::shared_ptr<Decoder> m_decoder;
 
     // Counter for statistics
     std::map<std::string, uint32_t> m_counter;
 
 };
-
-

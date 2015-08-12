@@ -23,7 +23,7 @@ class basic_relay : public relay
 public:
 
     basic_relay(const std::string &id,
-                const typename Decoder::pointer &decoder)
+                const std::shared_ptr<Decoder> &decoder)
         : relay(id),
           m_decoder(decoder),
           m_recode_on(true),
@@ -55,7 +55,7 @@ public:
                       &m_decode_buffer[0]);
 
             uint32_t rank = m_decoder->rank();
-            m_decoder->decode(&m_decode_buffer[0]);
+            m_decoder->read_payload(&m_decode_buffer[0]);
 
             if(rank < m_decoder->rank())
             {
@@ -88,7 +88,7 @@ public:
 
         if(m_recode_on)
         {
-            m_decoder->recode(&m_recode_buffer[0]);
+            m_decoder->write_payload(&m_recode_buffer[0]);
             packet p(m_recode_buffer);
             p.set_sender(node_id());
             forward_packet(p);
@@ -160,7 +160,7 @@ private:
     std::vector<uint8_t> m_decode_buffer;
 
     /// Decoder used by the relay to recode
-    typename Decoder::pointer m_decoder;
+    std::shared_ptr<Decoder> m_decoder;
 
     /// Statistics
     std::map<std::string, uint32_t> m_counter;
@@ -177,5 +177,3 @@ private:
     packet m_last_packet;
 
 };
-
-

@@ -24,9 +24,14 @@ def options(opt):
         major_version=1))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
+        name='cpuid',
+        git_repository='github.com/steinwurf/cpuid.git',
+        major_version=3))
+
+    bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='fifi',
         git_repository='github.com/steinwurf/fifi.git',
-        major_version=10))
+        major_version=20))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='gauge',
@@ -36,12 +41,27 @@ def options(opt):
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='kodo',
         git_repository='github.com/steinwurf/kodo.git',
-        major_version=15))
+        major_version=30))
+
+    bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
+        name='platform',
+        git_repository='github.com/steinwurf/platform.git',
+        major_version=1))
+
+    bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
+        name='recycle',
+        git_repository='github.com/steinwurf/recycle.git',
+        major_version=1))
+
+    bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
+        name='meta',
+        git_repository='github.com/steinwurf/meta.git',
+        major_version=1))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='sak',
         git_repository='github.com/steinwurf/sak.git',
-        major_version=10))
+        major_version=14))
 
     bundle.add_dependency(opt, resolve.ResolveGitMajorVersion(
         name='tables',
@@ -71,11 +91,15 @@ def configure(conf):
         conf.load_external_tool('runners', 'wurf_runner')
 
         recurse_helper(conf, 'boost')
+        recurse_helper(conf, 'cpuid')
         recurse_helper(conf, 'fifi')
         recurse_helper(conf, 'gauge')
         recurse_helper(conf, 'kodo')
         recurse_helper(conf, 'sak')
         recurse_helper(conf, 'tables')
+        recurse_helper(conf, 'platform')
+        recurse_helper(conf, 'recycle')
+        recurse_helper(conf, 'meta')
 
 
 def build(bld):
@@ -85,10 +109,14 @@ def build(bld):
         bld.load('wurf_dependency_bundle')
 
         recurse_helper(bld, 'boost')
+        recurse_helper(bld, 'cpuid')
         recurse_helper(bld, 'fifi')
         recurse_helper(bld, 'gauge')
         recurse_helper(bld, 'kodo')
         recurse_helper(bld, 'sak')
         recurse_helper(bld, 'tables')
+        recurse_helper(bld, 'platform')
+        recurse_helper(bld, 'recycle')
+        recurse_helper(bld, 'meta')
 
     bld.recurse('relay_simulations')

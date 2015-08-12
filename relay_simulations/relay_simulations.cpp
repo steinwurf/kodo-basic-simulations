@@ -13,6 +13,8 @@
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
 
+#include <kodo/rlnc/full_vector_codes.hpp>
+
 // Helper function to convert to string
 template<class T>
 std::string to_string(T t)
@@ -23,14 +25,14 @@ std::string to_string(T t)
 }
 
 // The encoders and decoders that we use from the Kodo library
-typedef kodo::full_rlnc_encoder<fifi::binary> Encoder;
-typedef kodo::full_rlnc_decoder<fifi::binary> Decoder;
+typedef kodo::rlnc::full_vector_encoder<fifi::binary> Encoder;
+typedef kodo::rlnc::full_vector_decoder<fifi::binary> Decoder;
 
-typedef kodo::full_rlnc_encoder<fifi::binary8> Encoder8;
-typedef kodo::full_rlnc_decoder<fifi::binary8> Decoder8;
+typedef kodo::rlnc::full_vector_encoder<fifi::binary8> Encoder8;
+typedef kodo::rlnc::full_vector_decoder<fifi::binary8> Decoder8;
 
-typedef kodo::full_rlnc_encoder<fifi::binary16> Encoder16;
-typedef kodo::full_rlnc_decoder<fifi::binary16> Decoder16;
+typedef kodo::rlnc::full_vector_encoder<fifi::binary16> Encoder16;
+typedef kodo::rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 
 // The simple relay simulation for the following topology:
 //
@@ -205,7 +207,7 @@ public:
 
         add_configuration(cs);
 
-        m_factory = boost::make_shared<factory_type>(
+        m_factory = std::make_shared<factory_type>(
             symbols, symbol_size, m_generator);
 
     }
@@ -214,10 +216,10 @@ protected:
 
     boost::random::mt19937 m_generator;
 
-    boost::shared_ptr<basic_sink<Decoder> > m_sink;
-    boost::shared_ptr<tick_scheduler> m_scheduler;
+    std::shared_ptr<basic_sink<Decoder> > m_sink;
+    std::shared_ptr<tick_scheduler> m_scheduler;
 
-    boost::shared_ptr<factory_type> m_factory;
+    std::shared_ptr<factory_type> m_factory;
 
 };
 
