@@ -21,7 +21,7 @@ public:
 
     /// Create a simple coin-flip channel
     basic_channel(const std::string &id,
-                  const boost::shared_ptr<random_bool> &channel_condition)
+                  const std::shared_ptr<random_bool> &channel_condition)
         : channel(id),
           m_channel_condition(channel_condition)
     { }
@@ -76,9 +76,8 @@ private:
     std::vector<packet> m_packets;
 
     // The channel
-    boost::shared_ptr<random_bool> m_channel_condition;
+    std::shared_ptr<random_bool> m_channel_condition;
 
     // Statistics
     std::map<std::string, uint32_t> m_counter;
 };
-

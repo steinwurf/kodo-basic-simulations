@@ -28,58 +28,58 @@ public:
             d = rand() % 256;
     }
 
-    boost::shared_ptr<basic_channel>
+    std::shared_ptr<basic_channel>
     build_channel(double success_probability, const std::string &id = "channel")
     {
         assert(success_probability >= 0.0);
         assert(success_probability <= 1.0);
 
-        auto channel_conditions = boost::make_shared<random_bool>(
-            boost::ref(m_random_generator), success_probability);
+        auto channel_conditions = std::make_shared<random_bool>(
+            std::ref(m_random_generator), success_probability);
 
-        return boost::make_shared<basic_channel>(id, channel_conditions);
+        return std::make_shared<basic_channel>(id, channel_conditions);
     }
 
-    boost::shared_ptr<basic_sink<Decoder> >
+    std::shared_ptr<basic_sink<Decoder> >
     build_sink(const std::string &id)
     {
         auto decoder = m_decoder_factory.build();
-        auto sink = boost::make_shared< basic_sink<Decoder> >(id, decoder);
+        auto sink = std::make_shared< basic_sink<Decoder> >(id, decoder);
 
         return sink;
     }
 
-    boost::shared_ptr<basic_relay<Decoder> >
+    std::shared_ptr<basic_relay<Decoder> >
     build_relay(const std::string &id)
     {
         auto decoder = m_decoder_factory.build();
-        auto relay = boost::make_shared< basic_relay<Decoder> >(id, decoder);
+        auto relay = std::make_shared< basic_relay<Decoder> >(id, decoder);
 
         return relay;
     }
 
-    boost::shared_ptr<basic_source<Encoder> >
+    std::shared_ptr<basic_source<Encoder> >
     build_source(const std::string &id)
     {
         auto encoder = m_encoder_factory.build();
         encoder->set_symbols(sak::storage(m_data));
 
-        auto source = boost::make_shared< basic_source<Encoder> >(id, encoder);
+        auto source = std::make_shared< basic_source<Encoder> >(id, encoder);
 
         return source;
     }
 
-    boost::shared_ptr<tick_scheduler> build_scheduler()
+    std::shared_ptr<tick_scheduler> build_scheduler()
     {
-        return boost::make_shared<tick_scheduler>();
+        return std::make_shared<tick_scheduler>();
     }
 
 private:
 
 
-    boost::shared_ptr<random_bool> build_random_bool(double success_probability)
+    std::shared_ptr<random_bool> build_random_bool(double success_probability)
     {
-        return boost::make_shared<random_bool>(boost::ref(m_random_generator),
+        return std::make_shared<random_bool>(std::ref(m_random_generator),
                                                success_probability);
     }
 
@@ -98,9 +98,3 @@ private:
     /// The random generator
     boost::random::mt19937 &m_random_generator;
 };
-
-
-
-
-
-

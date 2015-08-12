@@ -5,13 +5,15 @@
 
 #pragma once
 
-#include <boost/shared_ptr.hpp>
-
 #include <vector>
 #include <map>
 #include <string>
 
 #include <tables/table.hpp>
+#include <kodo/has_set_systematic_off.hpp>
+#include <kodo/has_set_systematic_on.hpp>
+#include <kodo/set_systematic_off.hpp>
+#include <kodo/set_systematic_on.hpp>
 
 #include "packet.hpp"
 #include "source.hpp"
@@ -23,7 +25,7 @@ class basic_source : public source
 public:
 
     basic_source(const std::string &id,
-                 const typename Encoder::pointer &encoder)
+                 const std::shared_ptr<Encoder>& encoder)
         : source(id),
           m_encoder(encoder)
     {
@@ -36,7 +38,7 @@ public:
     {
         ++m_counter["source_sent"];
 
-        m_encoder->encode(&m_payload[0]);
+        m_encoder->write_payload(&m_payload[0]);
 
         packet p(m_payload);
         p.set_sender(node_id());
@@ -51,14 +53,14 @@ public:
 
     void systematic_off()
     {
-        if(kodo::is_systematic_encoder(m_encoder))
-            kodo::set_systematic_off(m_encoder);
+        if(kodo::has_set_systematic_off<Encoder>::value)
+            kodo::set_systematic_off(*m_encoder);
     }
 
     void systematic_on()
     {
-        if(kodo::is_systematic_encoder(m_encoder))
-            kodo::set_systematic_on(m_encoder);
+        if(kodo::has_set_systematic_on<Encoder>::value)
+            kodo::set_systematic_on(*m_encoder);
     }
 
     void store_run(tables::table& results)
@@ -86,11 +88,8 @@ private:
     std::vector<uint8_t> m_payload;
 
     // Pointer to the encoder
-    typename Encoder::pointer m_encoder;
+    std::shared_ptr<Encoder> m_encoder;
 
     // Counter for statistics
     std::map<std::string, uint32_t> m_counter;
 };
-
-
-

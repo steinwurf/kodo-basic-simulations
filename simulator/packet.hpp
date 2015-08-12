@@ -28,18 +28,18 @@ class packet
 public:
 
     packet()
-        : m_impl(boost::make_shared<impl>())
+        : m_impl(std::make_shared<impl>())
         { }
 
     packet(const std::vector<uint8_t> &d)
-        : m_impl(boost::make_shared<impl>(d))
+        : m_impl(std::make_shared<impl>(d))
         { }
 
     void detach()
         {
             if( !m_impl.unique() )
             {
-                m_impl = boost::make_shared<impl>(*m_impl);
+                m_impl = std::make_shared<impl>(*m_impl);
             }
         }
 
@@ -98,6 +98,6 @@ public:
 
 private:
 
-    boost::shared_ptr<impl> m_impl;
+    std::shared_ptr<impl> m_impl;
 
 };

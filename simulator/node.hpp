@@ -27,7 +27,7 @@ public:
     { }
 
     // Adds a receiver to the output
-    virtual void add_output(const boost::shared_ptr<node> &recv)
+    virtual void add_output(const std::shared_ptr<node> &recv)
         {
             assert(recv);
             m_receivers.push_back(recv);
@@ -44,7 +44,7 @@ public:
             return m_receivers.size();
         }
 
-    boost::shared_ptr<node> get_receiver(uint32_t receiver_index)
+    std::shared_ptr<node> get_receiver(uint32_t receiver_index)
         {
             return m_receivers[receiver_index];
         }
@@ -65,11 +65,6 @@ private:
     std::string m_id;
 
     // Stores the output receivers
-    std::vector< boost::shared_ptr<node> > m_receivers;
+    std::vector< std::shared_ptr<node> > m_receivers;
 
 };
-
-
-
-
-
