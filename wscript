@@ -120,3 +120,4 @@ def build(bld):
         recurse_helper(bld, 'meta')
 
     bld.recurse('relay_simulations')
+    bld.recurse('butterfly')

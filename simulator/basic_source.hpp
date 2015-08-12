@@ -36,19 +36,16 @@ public:
 
     void tick()
     {
-        ++m_counter["source_sent"];
-
-        m_encoder->write_payload(&m_payload[0]);
-
-        packet p(m_payload);
-        p.set_sender(node_id());
-        forward_packet(p);
-    }
-
-    void forward_packet(packet p)
-    {
         for(uint32_t i = 0; i < receiver_count(); ++i)
+        {
+            ++m_counter["source_sent"];
+
+            m_encoder->write_payload(&m_payload[0]);
+
+            packet p(m_payload);
+            p.set_sender(node_id());
             forward(i,p);
+        }
     }
 
     void systematic_off()

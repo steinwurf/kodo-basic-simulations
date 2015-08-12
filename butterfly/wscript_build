@@ -1,0 +1,11 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+
+bld.program(
+    features='cxx test',
+    source=['butterfly.cpp'],
+    target='butterfly',
+    includes='..',
+    use=['kodo_includes', 'boost_includes', 'fifi_includes', 'sak_includes',
+         'boost_program_options', 'gauge'])
