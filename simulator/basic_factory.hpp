@@ -62,7 +62,7 @@ public:
     build_source(const std::string &id)
     {
         auto encoder = m_encoder_factory.build();
-        encoder->set_symbols(sak::storage(m_data));
+        encoder->set_const_symbols(sak::storage(m_data));
 
         auto source = std::make_shared< basic_source<Encoder> >(id, encoder);
 
