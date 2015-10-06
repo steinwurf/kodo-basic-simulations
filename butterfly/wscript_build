@@ -7,5 +7,4 @@ bld.program(
     source=['butterfly.cpp'],
     target='butterfly',
     includes='..',
-    use=['kodo_includes', 'boost_includes', 'fifi_includes', 'sak_includes',
-         'boost_program_options', 'gauge'])
+    use=['kodo_includes', 'gauge'])
