@@ -24,10 +24,10 @@ class basic_source : public source
 {
 public:
 
-    basic_source(const std::string &id,
-                 const std::shared_ptr<Encoder>& encoder)
-        : source(id),
-          m_encoder(encoder)
+    basic_source(const std::string& id,
+                 const std::shared_ptr<Encoder>& encoder) :
+        source(id),
+        m_encoder(encoder)
     {
         assert(m_encoder);
 
@@ -36,7 +36,7 @@ public:
 
     void tick()
     {
-        for(uint32_t i = 0; i < receiver_count(); ++i)
+        for (uint32_t i = 0; i < receiver_count(); ++i)
         {
             ++m_counter["source_sent"];
 
@@ -50,21 +50,21 @@ public:
 
     void systematic_off()
     {
-        if(kodo::has_set_systematic_off<Encoder>::value)
+        if (kodo::has_set_systematic_off<Encoder>::value)
             kodo::set_systematic_off(*m_encoder);
     }
 
     void systematic_on()
     {
-        if(kodo::has_set_systematic_on<Encoder>::value)
+        if (kodo::has_set_systematic_on<Encoder>::value)
             kodo::set_systematic_on(*m_encoder);
     }
 
     void store_run(tables::table& results)
     {
-        for(auto& c : m_counter)
+        for (auto& c : m_counter)
         {
-            if(!results.has_column(c.first))
+            if (!results.has_column(c.first))
             {
                 results.add_column(c.first);
                 results.set_default_value(c.first, uint32_t(0));

@@ -170,7 +170,7 @@ public:
             cs.get_value<bool>("recode");
 
 
-        if(recode)
+        if (recode)
         {
             r3->set_recode_on();
         }
@@ -228,16 +228,16 @@ BENCHMARK_OPTION(butterfly)
     gauge::po::options_description options("butterfly");
 
     options.add_options()
-        ("symbols", gauge::po::value<uint32_t>()->default_value(32),
-         "Set symbols");
+    ("symbols", gauge::po::value<uint32_t>()->default_value(32),
+     "Set symbols");
 
     options.add_options()
-        ("symbol_size", gauge::po::value<uint32_t>()->default_value(1400),
-         "Set symbols size");
+    ("symbol_size", gauge::po::value<uint32_t>()->default_value(1400),
+     "Set symbols size");
 
     options.add_options()
-        ("recode", gauge::po::value<bool>()->default_value(true),
-         "Set true if the relay(s) should recode packets");
+    ("recode", gauge::po::value<bool>()->default_value(true),
+     "Set true if the relay(s) should recode packets");
 
 
     gauge::runner::instance().register_options(options);
@@ -247,9 +247,10 @@ typedef butterfly<Encoder, Decoder> butterfly_fixture;
 
 BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
 {
-    RUN{
+    RUN
+    {
 
-        while(!(m_s1->is_complete() && m_s2->is_complete()))
+        while (!(m_s1->is_complete() && m_s2->is_complete()))
         {
             m_scheduler->tick();
         }
@@ -285,7 +286,7 @@ BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
 //     }
 // }
 
-int main(int argc, const char *argv[])
+int main(int argc, const char* argv[])
 {
     srand(static_cast<uint32_t>(time(0)));
 

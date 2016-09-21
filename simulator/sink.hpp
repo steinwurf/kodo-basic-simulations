@@ -13,8 +13,8 @@ class sink : public node
 {
 public:
 
-    sink(const std::string &id)
-        : node(id)
+    sink(const std::string& id) :
+        node(id)
     { }
 
     /// @return true when the sink has completed decoding

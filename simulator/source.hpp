@@ -13,8 +13,8 @@ class source : public node
 {
 public:
 
-    source(const std::string &id)
-        : node(id)
+    source(const std::string& id) :
+        node(id)
     {}
 
     virtual void systematic_off() = 0;

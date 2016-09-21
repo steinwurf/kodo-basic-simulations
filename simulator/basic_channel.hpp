@@ -20,22 +20,22 @@ class basic_channel : public channel
 public:
 
     /// Create a simple coin-flip channel
-    basic_channel(const std::string &id,
-                  const std::shared_ptr<random_bool> &channel_condition)
-        : channel(id),
-          m_channel_condition(channel_condition)
+    basic_channel(const std::string& id,
+                  const std::shared_ptr<random_bool>& channel_condition) :
+        channel(id),
+        m_channel_condition(channel_condition)
     { }
 
     /// Receives a payload
     virtual void receive(packet payload)
     {
-        for(uint32_t j = 0; j < receiver_count(); ++j)
+        for (uint32_t j = 0; j < receiver_count(); ++j)
         {
             std::string recv_id = get_receiver(j)->node_id();
             std::string src_id = payload.get_sender();
 
             // If true we drop
-            if(m_channel_condition->generate())
+            if (m_channel_condition->generate())
             {
                 ++m_counter[node_id()+"_"+src_id+"_to_"+recv_id+"_dropped"];
             }
@@ -52,9 +52,9 @@ public:
 
     void store_run(tables::table& results)
     {
-        for(auto& c : m_counter)
+        for (auto& c : m_counter)
         {
-            if(!results.has_column(c.first))
+            if (!results.has_column(c.first))
             {
                 results.add_column(c.first);
                 results.set_default_value(c.first, uint32_t(0));

@@ -14,7 +14,7 @@ class basic_factory
 public:
 
     basic_factory(uint32_t symbols, uint32_t symbol_size,
-                  boost::random::mt19937 &random_generator) :
+                  boost::random::mt19937& random_generator) :
         m_decoder_factory(symbols, symbol_size),
         m_encoder_factory(symbols, symbol_size),
         m_random_generator(random_generator)
@@ -24,12 +24,12 @@ public:
 
         m_data.resize(max_block_size);
 
-        for(auto& d : m_data)
+        for (auto& d : m_data)
             d = rand() % 256;
     }
 
     std::shared_ptr<basic_channel>
-    build_channel(double success_probability, const std::string &id = "channel")
+    build_channel(double success_probability, const std::string& id = "channel")
     {
         assert(success_probability >= 0.0);
         assert(success_probability <= 1.0);
@@ -41,7 +41,7 @@ public:
     }
 
     std::shared_ptr<basic_sink<Decoder> >
-    build_sink(const std::string &id)
+    build_sink(const std::string& id)
     {
         auto decoder = m_decoder_factory.build();
         auto sink = std::make_shared< basic_sink<Decoder> >(id, decoder);
@@ -50,7 +50,7 @@ public:
     }
 
     std::shared_ptr<basic_relay<Decoder> >
-    build_relay(const std::string &id)
+    build_relay(const std::string& id)
     {
         auto decoder = m_decoder_factory.build();
         auto relay = std::make_shared< basic_relay<Decoder> >(id, decoder);
@@ -59,7 +59,7 @@ public:
     }
 
     std::shared_ptr<basic_source<Encoder> >
-    build_source(const std::string &id)
+    build_source(const std::string& id)
     {
         auto encoder = m_encoder_factory.build();
         encoder->set_const_symbols(sak::storage(m_data));
@@ -80,7 +80,7 @@ private:
     std::shared_ptr<random_bool> build_random_bool(double success_probability)
     {
         return std::make_shared<random_bool>(std::ref(m_random_generator),
-                                               success_probability);
+                                             success_probability);
     }
 
 
@@ -96,5 +96,5 @@ private:
     std::vector<uint8_t> m_data;
 
     /// The random generator
-    boost::random::mt19937 &m_random_generator;
+    boost::random::mt19937& m_random_generator;
 };
