@@ -13,8 +13,8 @@ class relay : public node
 {
 public:
 
-    relay(const std::string &id)
-        : node(id)
+    relay(const std::string& id) :
+        node(id)
     { }
 
     virtual void set_recode_on() = 0;

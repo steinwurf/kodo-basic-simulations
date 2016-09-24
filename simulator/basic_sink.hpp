@@ -22,10 +22,10 @@ class basic_sink : public sink
 {
 public:
 
-    basic_sink(const std::string &id,
-               const std::shared_ptr<Decoder> &decoder)
-        : sink(id),
-          m_decoder(decoder)
+    basic_sink(const std::string& id,
+               const std::shared_ptr<Decoder>& decoder) :
+        sink(id),
+        m_decoder(decoder)
     {
         assert(m_decoder);
 
@@ -44,7 +44,7 @@ public:
 
         ++m_counter[node_id()+"_receive_from_"+sender];
 
-        if(m_decoder->is_complete())
+        if (m_decoder->is_complete())
         {
             ++m_counter[node_id()+"_waste_from_"+sender];
             return;
@@ -58,7 +58,7 @@ public:
         uint32_t rank = m_decoder->rank();
         m_decoder->read_payload(&m_decode_buffer[0]);
 
-        if(m_decoder->rank() > rank)
+        if (m_decoder->rank() > rank)
         {
             ++m_counter[node_id()+"_innovative_from_"+sender];
         }
@@ -70,9 +70,9 @@ public:
 
     void store_run(tables::table& results)
     {
-        for(auto& c : m_counter)
+        for (auto& c : m_counter)
         {
-            if(!results.has_column(c.first))
+            if (!results.has_column(c.first))
             {
                 results.add_column(c.first);
                 results.set_default_value(c.first, uint32_t(0));

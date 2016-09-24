@@ -22,13 +22,13 @@ class basic_relay : public relay
 {
 public:
 
-    basic_relay(const std::string &id,
-                const std::shared_ptr<Decoder> &decoder)
-        : relay(id),
-          m_decoder(decoder),
-          m_recode_on(true),
-          m_transmit_on_receive(false),
-          m_new_packet(false)
+    basic_relay(const std::string& id,
+                const std::shared_ptr<Decoder>& decoder) :
+        relay(id),
+        m_decoder(decoder),
+        m_recode_on(true),
+        m_transmit_on_receive(false),
+        m_new_packet(false)
     {
         assert(m_decoder);
 
@@ -42,7 +42,7 @@ public:
         m_last_packet = payload;
         m_new_packet = true;
 
-        if(m_decoder->is_complete())
+        if (m_decoder->is_complete())
         {
             std::string counter_id =
                 node_id()+"_waste_from_"+payload.get_sender();
@@ -57,7 +57,7 @@ public:
             uint32_t rank = m_decoder->rank();
             m_decoder->read_payload(&m_decode_buffer[0]);
 
-            if(rank < m_decoder->rank())
+            if (rank < m_decoder->rank())
             {
                 std::string counter_id =
                     node_id()+"_innovative_from_"+payload.get_sender();
@@ -76,7 +76,7 @@ public:
 
     void tick()
     {
-        if(m_transmit_on_receive && !m_new_packet)
+        if (m_transmit_on_receive && !m_new_packet)
         {
             // In this mode we only transmit if we got an packet
             return;
@@ -86,7 +86,7 @@ public:
         // 1) We are transmitting on receive and we got a packet
         // 2) We always transmit on every tick
 
-        if(m_recode_on)
+        if (m_recode_on)
         {
             m_decoder->write_payload(&m_recode_buffer[0]);
             packet p(m_recode_buffer);
@@ -95,7 +95,7 @@ public:
         }
         else
         {
-            if(!m_last_packet.is_valid())
+            if (!m_last_packet.is_valid())
                 return;
 
             m_last_packet.set_sender(node_id());
@@ -108,9 +108,9 @@ public:
 
     void store_run(tables::table& results)
     {
-        for(auto& c : m_counter)
+        for (auto& c : m_counter)
         {
-            if(!results.has_column(c.first))
+            if (!results.has_column(c.first))
             {
                 results.add_column(c.first);
                 results.set_default_value(c.first, uint32_t(0));
@@ -124,7 +124,7 @@ public:
 
     void forward_packet(packet payload)
     {
-        for(uint32_t j = 0; j < receiver_count(); ++j)
+        for (uint32_t j = 0; j < receiver_count(); ++j)
         {
             forward(j, payload);
         }

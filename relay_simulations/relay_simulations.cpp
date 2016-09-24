@@ -122,7 +122,7 @@ public:
 
         auto source = m_factory->build_source("source");
 
-        if(source_systematic)
+        if (source_systematic)
             source->systematic_on();
         else
             source->systematic_off();
@@ -137,7 +137,7 @@ public:
 
         source->add_output(channel_source_relay);
 
-        for(uint32_t i = 0; i < relays; ++i)
+        for (uint32_t i = 0; i < relays; ++i)
         {
             auto relay = m_factory->build_relay("relay"+to_string(i));
 
@@ -145,7 +145,7 @@ public:
             relay->add_output(channel_relay_sink);
             relay->set_transmit_on_receive(relay_transmit_on_receive);
 
-            if(recode)
+            if (recode)
             {
                 relay->set_recode_on();
             }
@@ -191,7 +191,8 @@ public:
         auto relays = options["relays"].as<uint32_t>();
 
         auto source_systematic = options["source_systematic"].as<bool>();
-        auto relay_transmit_on_receive = options["relay_transmit_on_receive"].as<bool>();
+        auto relay_transmit_on_receive =
+            options["relay_transmit_on_receive"].as<bool>();
         auto recode = options["recode"].as<bool>();
 
         gauge::config_set cs;
@@ -232,69 +233,69 @@ BENCHMARK_OPTION(relay_line)
             32);
 
     options.add_options()
-        ("symbols", default_symbols, "Set symbols");
+    ("symbols", default_symbols, "Set symbols");
 
     auto default_symbol_size =
         gauge::po::value<uint32_t>()->default_value(
             1400);
 
     options.add_options()
-        ("symbol_size", default_symbol_size, "Set symbols size");
+    ("symbol_size", default_symbol_size, "Set symbols size");
 
     auto default_error_source_sink =
         gauge::po::value<double>()->default_value(
             0.5);
 
     options.add_options()
-        ("error_source_sink", default_error_source_sink, "Error source to sink");
+    ("error_source_sink", default_error_source_sink, "Error source to sink");
 
     auto default_error_source_relay =
         gauge::po::value<double>()->default_value(
             0.5);
 
     options.add_options()
-        ("error_source_relay", default_error_source_relay, "Error source to relay");
+    ("error_source_relay", default_error_source_relay, "Error source to relay");
 
     auto default_error_relay_sink =
         gauge::po::value<double>()->default_value(
             0.5);
 
     options.add_options()
-        ("error_relay_sink", default_error_relay_sink, "Error relay to sink");
+    ("error_relay_sink", default_error_relay_sink, "Error relay to sink");
 
     auto default_relays =
         gauge::po::value<uint32_t>()->default_value(1);
 
     options.add_options()
-        ("relays", default_relays, "Relays");
+    ("relays", default_relays, "Relays");
 
     auto default_source_systematic =
         gauge::po::value<bool>()->default_value(true);
 
     options.add_options()
-        ("source_systematic", default_source_systematic,
-         "Whether the source is systematic or not "
-         "--systematic=1 turns on systematic "
-         "source. Systematic means that all "
-         "packets in a generation are sent first "
-         "once without coding. After sending "
-         "everything once coding starts.");
+    ("source_systematic", default_source_systematic,
+     "Whether the source is systematic or not "
+     "--systematic=1 turns on systematic "
+     "source. Systematic means that all "
+     "packets in a generation are sent first "
+     "once without coding. After sending "
+     "everything once coding starts.");
 
     auto default_relay_transmit_on_receive =
         gauge::po::value<bool>()->default_value(true);
 
     options.add_options()
-        ("relay_transmit_on_receive", default_relay_transmit_on_receive,
-         "Set true if the relay(s) should transmit in every "
-         "tick or when a packet is received from the "
-         "source");
+    ("relay_transmit_on_receive", default_relay_transmit_on_receive,
+     "Set true if the relay(s) should transmit in every "
+     "tick or when a packet is received from the "
+     "source");
 
     auto default_recode =
         gauge::po::value<bool>()->default_value(true);
 
     options.add_options()
-        ("recode", default_recode,
-         "Set true if the relay(s) should recode packets");
+    ("recode", default_recode,
+     "Set true if the relay(s) should recode packets");
 
 
     gauge::runner::instance().register_options(options);
@@ -304,9 +305,10 @@ typedef relay_simulation<Encoder, Decoder> relay_fixture;
 
 BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
 {
-    RUN{
+    RUN
+    {
 
-        while(!m_sink->is_complete())
+        while (!m_sink->is_complete())
         {
             m_scheduler->tick();
         }
@@ -318,9 +320,10 @@ typedef relay_simulation<Encoder8, Decoder8> relay_fixture8;
 
 BENCHMARK_F_INLINE(relay_fixture8, Relay, binary8, 10)
 {
-    RUN{
+    RUN
+    {
 
-        while(!m_sink->is_complete())
+        while (!m_sink->is_complete())
         {
             m_scheduler->tick();
         }
@@ -332,9 +335,10 @@ typedef relay_simulation<Encoder16, Decoder16> relay_fixture16;
 
 BENCHMARK_F_INLINE(relay_fixture16, Relay, binary16, 10)
 {
-    RUN{
+    RUN
+    {
 
-        while(!m_sink->is_complete())
+        while (!m_sink->is_complete())
         {
             m_scheduler->tick();
         }
@@ -342,7 +346,7 @@ BENCHMARK_F_INLINE(relay_fixture16, Relay, binary16, 10)
     }
 }
 
-int main(int argc, const char *argv[])
+int main(int argc, const char* argv[])
 {
     srand(static_cast<uint32_t>(time(0)));
 

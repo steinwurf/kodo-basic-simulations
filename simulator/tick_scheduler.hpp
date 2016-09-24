@@ -20,10 +20,11 @@ public:
 
     typedef std::shared_ptr<node> node_ptr;
 
-    tick_scheduler() : m_ticks(0)
+    tick_scheduler() :
+        m_ticks(0)
     { }
 
-    void add_node(const node_ptr &node)
+    void add_node(const node_ptr& node)
     {
         m_nodes.push_back(node);
     }
@@ -31,7 +32,7 @@ public:
     void tick()
     {
         ++m_ticks;
-        for(uint32_t i = 0; i < m_nodes.size(); ++i)
+        for (uint32_t i = 0; i < m_nodes.size(); ++i)
         {
             m_nodes[i]->tick();
         }
@@ -39,12 +40,12 @@ public:
 
     void store_run(tables::table& results)
     {
-        for(auto& n: m_nodes)
+        for (auto& n: m_nodes)
         {
             n->store_run(results);
         }
 
-        if(!results.has_column("ticks"))
+        if (!results.has_column("ticks"))
         {
             results.add_column("ticks");
         }

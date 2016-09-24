@@ -12,8 +12,8 @@
 class channel : public node
 {
 public:
-    channel(const std::string &id)
-        : node(id)
+    channel(const std::string& id) :
+        node(id)
     { }
 };
 

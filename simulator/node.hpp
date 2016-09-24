@@ -13,12 +13,12 @@ class node
 {
 public:
 
-    node(const std::string &id)
-        : m_id(id)
-        { }
+    node(const std::string& id) :
+        m_id(id)
+    { }
 
     virtual ~node()
-        { }
+    { }
 
     virtual void receive(packet payload) = 0;
     virtual void tick() = 0;
@@ -27,37 +27,37 @@ public:
     { }
 
     // Adds a receiver to the output
-    virtual void add_output(const std::shared_ptr<node> &recv)
-        {
-            assert(recv);
-            m_receivers.push_back(recv);
-        }
+    virtual void add_output(const std::shared_ptr<node>& recv)
+    {
+        assert(recv);
+        m_receivers.push_back(recv);
+    }
 
     // Forwards a payload to the output
     void forward(uint32_t receiver_index, packet payload)
-        {
-            m_receivers[receiver_index]->receive(payload);
-        }
+    {
+        m_receivers[receiver_index]->receive(payload);
+    }
 
     uint32_t receiver_count()
-        {
-            return m_receivers.size();
-        }
+    {
+        return m_receivers.size();
+    }
 
     std::shared_ptr<node> get_receiver(uint32_t receiver_index)
-        {
-            return m_receivers[receiver_index];
-        }
+    {
+        return m_receivers[receiver_index];
+    }
 
     std::string node_id()
-        {
-            return m_id;
-        }
+    {
+        return m_id;
+    }
 
-    const std::string & node_id() const
-        {
-            return m_id;
-        }
+    const std::string& node_id() const
+    {
+        return m_id;
+    }
 
 private:
 
