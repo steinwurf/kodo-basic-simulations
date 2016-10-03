@@ -10,10 +10,10 @@
 #include <string>
 
 #include <tables/table.hpp>
-#include <kodo/has_set_systematic_off.hpp>
-#include <kodo/has_set_systematic_on.hpp>
-#include <kodo/set_systematic_off.hpp>
-#include <kodo/set_systematic_on.hpp>
+#include <kodo_core/has_set_systematic_off.hpp>
+#include <kodo_core/has_set_systematic_on.hpp>
+#include <kodo_core/set_systematic_off.hpp>
+#include <kodo_core/set_systematic_on.hpp>
 
 #include "packet.hpp"
 #include "source.hpp"
@@ -50,14 +50,14 @@ public:
 
     void systematic_off()
     {
-        if (kodo::has_set_systematic_off<Encoder>::value)
-            kodo::set_systematic_off(*m_encoder);
+        if (kodo_core::has_set_systematic_off<Encoder>::value)
+            kodo_core::set_systematic_off(*m_encoder);
     }
 
     void systematic_on()
     {
-        if (kodo::has_set_systematic_on<Encoder>::value)
-            kodo::set_systematic_on(*m_encoder);
+        if (kodo_core::has_set_systematic_on<Encoder>::value)
+            kodo_core::set_systematic_on(*m_encoder);
     }
 
     void store_run(tables::table& results)

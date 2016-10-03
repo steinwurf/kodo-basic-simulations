@@ -3,15 +3,13 @@
 
 import os, sys, urllib2, traceback
 
-project_name = 'basic_simulations'
+project_name = 'kodo_basic_simulations'
 project_dependencies = \
 [
     'waf-tools',
-    'gtest',
     'boost',
-    'sak',
     'fifi',
-    'kodo',
+    'kodo-rlnc',
 ]
 
 # Importing a dynamically generated module

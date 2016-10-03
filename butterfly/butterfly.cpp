@@ -15,7 +15,7 @@
 
 #include <boost/random/mersenne_twister.hpp>
 
-#include <kodo/rlnc/full_vector_codes.hpp>
+#include <kodo_rlnc/full_vector_codes.hpp>
 
 // Helper function to convert to string
 template<class T>
@@ -27,14 +27,14 @@ std::string to_string(T t)
 }
 
 // The encoders and decoders that we use from the Kodo library
-typedef kodo::rlnc::full_vector_encoder<fifi::binary> Encoder;
-typedef kodo::rlnc::full_vector_decoder<fifi::binary> Decoder;
+typedef kodo_rlnc::full_vector_encoder<fifi::binary> Encoder;
+typedef kodo_rlnc::full_vector_decoder<fifi::binary> Decoder;
 
-typedef kodo::rlnc::full_vector_encoder<fifi::binary8> Encoder8;
-typedef kodo::rlnc::full_vector_decoder<fifi::binary8> Decoder8;
+typedef kodo_rlnc::full_vector_encoder<fifi::binary8> Encoder8;
+typedef kodo_rlnc::full_vector_decoder<fifi::binary8> Decoder8;
 
-typedef kodo::rlnc::full_vector_encoder<fifi::binary16> Encoder16;
-typedef kodo::rlnc::full_vector_decoder<fifi::binary16> Decoder16;
+typedef kodo_rlnc::full_vector_encoder<fifi::binary16> Encoder16;
+typedef kodo_rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 
 // The simple butterfly simulation for the following topology:
 //             +--------+

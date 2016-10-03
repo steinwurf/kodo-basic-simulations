@@ -6,6 +6,8 @@ of every change, see the Git log.
 
 Latest
 ------
+* Major: Upgrade to kodo-rlnc 4
+* Major: Removed kodo dependency
 * Major: Upgrade to waf-tools 3
 * Major: Upgrade to boost 2
 * Major: Upgrade to tables 6
