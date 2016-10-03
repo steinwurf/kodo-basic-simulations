@@ -7,4 +7,4 @@ bld.program(
     source=['relay_simulations.cpp'],
     target='relay_simulations',
     includes='..',
-    use=['kodo_includes', 'gauge'])
+    use=['kodo_rlnc_includes', 'gauge'])

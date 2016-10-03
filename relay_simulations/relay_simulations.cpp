@@ -13,7 +13,7 @@
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
 
-#include <kodo/rlnc/full_vector_codes.hpp>
+#include <kodo_rlnc/full_vector_codes.hpp>
 
 // Helper function to convert to string
 template<class T>
@@ -25,14 +25,14 @@ std::string to_string(T t)
 }
 
 // The encoders and decoders that we use from the Kodo library
-typedef kodo::rlnc::full_vector_encoder<fifi::binary> Encoder;
-typedef kodo::rlnc::full_vector_decoder<fifi::binary> Decoder;
+typedef kodo_rlnc::full_vector_encoder<fifi::binary> Encoder;
+typedef kodo_rlnc::full_vector_decoder<fifi::binary> Decoder;
 
-typedef kodo::rlnc::full_vector_encoder<fifi::binary8> Encoder8;
-typedef kodo::rlnc::full_vector_decoder<fifi::binary8> Decoder8;
+typedef kodo_rlnc::full_vector_encoder<fifi::binary8> Encoder8;
+typedef kodo_rlnc::full_vector_decoder<fifi::binary8> Decoder8;
 
-typedef kodo::rlnc::full_vector_encoder<fifi::binary16> Encoder16;
-typedef kodo::rlnc::full_vector_decoder<fifi::binary16> Decoder16;
+typedef kodo_rlnc::full_vector_encoder<fifi::binary16> Encoder16;
+typedef kodo_rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 
 // The simple relay simulation for the following topology:
 //
@@ -203,7 +203,8 @@ public:
         cs.set_value<double>("error_relay_sink", error_relay_sink);
         cs.set_value<uint32_t>("relays", relays);
         cs.set_value<bool>("source_systematic", source_systematic);
-        cs.set_value<bool>("relay_transmit_on_receive", relay_transmit_on_receive);
+        cs.set_value<bool>(
+            "relay_transmit_on_receive", relay_transmit_on_receive);
         cs.set_value<bool>("recode", recode);
 
         add_configuration(cs);
@@ -229,36 +230,31 @@ BENCHMARK_OPTION(relay_line)
     gauge::po::options_description options("relay line");
 
     auto default_symbols =
-        gauge::po::value<uint32_t>()->default_value(
-            32);
+        gauge::po::value<uint32_t>()->default_value(32);
 
     options.add_options()
     ("symbols", default_symbols, "Set symbols");
 
     auto default_symbol_size =
-        gauge::po::value<uint32_t>()->default_value(
-            1400);
+        gauge::po::value<uint32_t>()->default_value(1400);
 
     options.add_options()
     ("symbol_size", default_symbol_size, "Set symbols size");
 
     auto default_error_source_sink =
-        gauge::po::value<double>()->default_value(
-            0.5);
+        gauge::po::value<double>()->default_value(0.5);
 
     options.add_options()
     ("error_source_sink", default_error_source_sink, "Error source to sink");
 
     auto default_error_source_relay =
-        gauge::po::value<double>()->default_value(
-            0.5);
+        gauge::po::value<double>()->default_value(0.5);
 
     options.add_options()
     ("error_source_relay", default_error_source_relay, "Error source to relay");
 
     auto default_error_relay_sink =
-        gauge::po::value<double>()->default_value(
-            0.5);
+        gauge::po::value<double>()->default_value(0.5);
 
     options.add_options()
     ("error_relay_sink", default_error_relay_sink, "Error relay to sink");
