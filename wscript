@@ -31,7 +31,7 @@ def resolve(ctx):
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-rlnc',
         git_repository='github.com/steinwurf/kodo-rlnc.git',
-        major=4))
+        major=5))
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='tables',
