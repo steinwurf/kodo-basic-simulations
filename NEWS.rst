@@ -6,7 +6,11 @@ of every change, see the Git log.
 
 Latest
 ------
-* Major: Upgrade to kodo-rlnc 4
+* Major: Upgrade to waf-tools 4
+* Major: Upgrade to boost 3
+* Major: Upgrade to kodo-rlnc 6
+* Major: Upgrade to tables 6
+* Minor: Upgrade to gauge 11
 * Major: Removed kodo dependency
 * Major: Upgrade to waf-tools 3
 * Major: Upgrade to boost 2
