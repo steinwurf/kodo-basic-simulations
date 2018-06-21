@@ -7,6 +7,10 @@ of every change, see the Git log.
 Latest
 ------
 * tbd
+
+2.0.0
+-----
+* Major: Upgrade to kodo-rlnc 13
 * Minor: Updated the license to STEINWURF EVALUATION LICENSE 1.0.
 
 1.0.0
