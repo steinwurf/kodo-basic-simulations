@@ -7,4 +7,4 @@ bld.program(
     source=['butterfly.cpp'],
     target='butterfly',
     includes='..',
-    use=['kodo_rlnc_includes', 'gauge'])
+    use=['kodo_rlnc', 'gauge'])

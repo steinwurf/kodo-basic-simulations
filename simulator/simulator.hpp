@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <kodo_rlnc/full_vector_codes.hpp>
+#include <kodo_rlnc/coders.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/bernoulli_distribution.hpp>
 #include <boost/variant.hpp>
@@ -29,5 +29,3 @@
 #include "basic_source.hpp"
 #include "basic_relay.hpp"
 #include "basic_factory.hpp"
-
-

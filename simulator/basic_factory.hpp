@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <fifi/api/field.hpp>
 
 /// Helper class which makes it a bit more convenient to build
 /// the elements of a basic simulation
@@ -13,19 +14,13 @@ class basic_factory
 {
 public:
 
-    basic_factory(uint32_t symbols, uint32_t symbol_size,
-                  boost::random::mt19937& random_generator) :
-        m_decoder_factory(symbols, symbol_size),
-        m_encoder_factory(symbols, symbol_size),
+    basic_factory(
+        fifi::api::field field, uint32_t symbols, uint32_t symbol_size,
+        boost::random::mt19937& random_generator) :
+        m_decoder_factory(field, symbols, symbol_size),
+        m_encoder_factory(field, symbols, symbol_size),
         m_random_generator(random_generator)
     {
-        uint32_t max_block_size =
-            m_encoder_factory.max_block_size();
-
-        m_data.resize(max_block_size);
-
-        for (auto& d : m_data)
-            d = rand() % 256;
     }
 
     std::shared_ptr<basic_channel>
@@ -62,8 +57,6 @@ public:
     build_source(const std::string& id)
     {
         auto encoder = m_encoder_factory.build();
-        encoder->set_const_symbols(storage::storage(m_data));
-
         auto source = std::make_shared< basic_source<Encoder> >(id, encoder);
 
         return source;
@@ -90,9 +83,6 @@ private:
 
     /// Factory for building encoders
     typename Encoder::factory m_encoder_factory;
-
-    /// Data for the encoders
-    std::vector<uint8_t> m_data;
 
     /// The random generator
     boost::random::mt19937& m_random_generator;

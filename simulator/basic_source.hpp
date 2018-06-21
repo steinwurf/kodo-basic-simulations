@@ -5,15 +5,12 @@
 
 #pragma once
 
+#include <cstdlib>
 #include <vector>
 #include <map>
 #include <string>
 
 #include <tables/table.hpp>
-#include <kodo_core/has_set_systematic_off.hpp>
-#include <kodo_core/has_set_systematic_on.hpp>
-#include <kodo_core/set_systematic_off.hpp>
-#include <kodo_core/set_systematic_on.hpp>
 
 #include "packet.hpp"
 #include "source.hpp"
@@ -24,14 +21,19 @@ class basic_source : public source
 {
 public:
 
-    basic_source(const std::string& id,
-                 const std::shared_ptr<Encoder>& encoder) :
+    basic_source(const std::string& id, std::shared_ptr<Encoder> encoder) :
         source(id),
         m_encoder(encoder)
     {
         assert(m_encoder);
+        m_payload.resize(m_encoder->payload_size());
 
-        m_payload.resize(encoder->payload_size());
+        m_data.resize(m_encoder->block_size());
+
+        for (auto& d : m_data)
+            d = rand() % 256;
+
+        m_encoder->set_const_symbols(storage::storage(m_data));
     }
 
     void tick()
@@ -50,14 +52,14 @@ public:
 
     void systematic_off()
     {
-        if (kodo_core::has_set_systematic_off<Encoder>::value)
-            kodo_core::set_systematic_off(*m_encoder);
+        if (m_encoder->has_systematic_mode())
+            m_encoder->set_systematic_off();
     }
 
     void systematic_on()
     {
-        if (kodo_core::has_set_systematic_on<Encoder>::value)
-            kodo_core::set_systematic_on(*m_encoder);
+        if (m_encoder->has_systematic_mode())
+            m_encoder->set_systematic_on();
     }
 
     void store_run(tables::table& results)
@@ -80,6 +82,9 @@ public:
     }
 
 private:
+
+    // Data buffer for the encoder
+    std::vector<uint8_t> m_data;
 
     // Payload buffer
     std::vector<uint8_t> m_payload;
