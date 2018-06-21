@@ -235,10 +235,9 @@ BENCHMARK_OPTION(butterfly)
     gauge::runner::instance().register_options(options);
 }
 
-using butterfly_fixture = butterfly<
-    fifi::api::field::binary,
-    kodo_rlnc::encoder,
-    kodo_rlnc::decoder>;
+using butterfly_fixture =
+    butterfly<
+    fifi::api::field::binary, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
 {
@@ -251,10 +250,9 @@ BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
     }
 }
 
-using butterfly_fixture8 = butterfly<
-    fifi::api::field::binary8,
-    kodo_rlnc::encoder,
-    kodo_rlnc::decoder>;
+using butterfly_fixture8 =
+    butterfly<
+    fifi::api::field::binary8, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(butterfly_fixture8, Butterfly, binary8, 10)
 {

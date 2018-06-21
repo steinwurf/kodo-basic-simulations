@@ -292,10 +292,9 @@ BENCHMARK_OPTION(relay_line)
     gauge::runner::instance().register_options(options);
 }
 
-using relay_fixture = relay_simulation<
-    fifi::api::field::binary,
-    kodo_rlnc::encoder,
-    kodo_rlnc::decoder>;
+using relay_fixture =
+    relay_simulation<
+    fifi::api::field::binary, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
 {
@@ -308,10 +307,9 @@ BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
     }
 }
 
-using relay_fixture8 = relay_simulation<
-    fifi::api::field::binary8,
-    kodo_rlnc::encoder,
-    kodo_rlnc::decoder>;
+using relay_fixture8 =
+    relay_simulation<
+    fifi::api::field::binary8, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(relay_fixture8, Relay, binary8, 10)
 {
