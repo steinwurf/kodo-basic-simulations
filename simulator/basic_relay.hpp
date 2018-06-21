@@ -22,8 +22,7 @@ class basic_relay : public relay
 {
 public:
 
-    basic_relay(const std::string& id,
-                const std::shared_ptr<Decoder>& decoder) :
+    basic_relay(const std::string& id, std::shared_ptr<Decoder> decoder) :
         relay(id),
         m_decoder(decoder),
         m_recode_on(true),
@@ -34,6 +33,9 @@ public:
 
         m_recode_buffer.resize(m_decoder->payload_size());
         m_decode_buffer.resize(m_decoder->payload_size());
+
+        m_data.resize(m_decoder->block_size());
+        m_decoder->set_mutable_symbols(storage::storage(m_data));
     }
 
 
@@ -85,7 +87,6 @@ public:
         // We send a packet either:
         // 1) We are transmitting on receive and we got a packet
         // 2) We always transmit on every tick
-
         if (m_recode_on)
         {
             m_decoder->write_payload(&m_recode_buffer[0]);
@@ -117,7 +118,6 @@ public:
             }
 
             results.set_value(c.first,c.second);
-
         }
     }
 
@@ -129,7 +129,6 @@ public:
             forward(j, payload);
         }
     }
-
 
     void set_recode_on()
     {
@@ -151,9 +150,10 @@ public:
         m_transmit_on_receive = value;
     }
 
-
 private:
 
+    /// Data buffer for the decoder
+    std::vector<uint8_t> m_data;
 
     /// Buffer for packets
     std::vector<uint8_t> m_recode_buffer;

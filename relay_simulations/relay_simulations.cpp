@@ -6,14 +6,16 @@
 #include <ctime>
 #include <string>
 
-#include "../simulator/simulator.hpp"
-
 #include <gauge/gauge.hpp>
 #include <gauge/python_printer.hpp>
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
 
-#include <kodo_rlnc/full_vector_codes.hpp>
+#include <fifi/api/field.hpp>
+
+#include <kodo_rlnc/coders.hpp>
+
+#include "../simulator/simulator.hpp"
 
 // Helper function to convert to string
 template<class T>
@@ -23,16 +25,6 @@ std::string to_string(T t)
     ss << t;
     return ss.str();
 }
-
-// The encoders and decoders that we use from the Kodo library
-typedef kodo_rlnc::full_vector_encoder<fifi::binary> Encoder;
-typedef kodo_rlnc::full_vector_decoder<fifi::binary> Decoder;
-
-typedef kodo_rlnc::full_vector_encoder<fifi::binary8> Encoder8;
-typedef kodo_rlnc::full_vector_decoder<fifi::binary8> Decoder8;
-
-typedef kodo_rlnc::full_vector_encoder<fifi::binary16> Encoder16;
-typedef kodo_rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 
 // The simple relay simulation for the following topology:
 //
@@ -55,12 +47,17 @@ typedef kodo_rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 //
 // The simulator uses the gauge benchmarking tool for
 // driving and providing options to the simulations.
-template<class Encoder, class Decoder>
+template
+<
+    fifi::api::field Field,
+    class Encoder,
+    class Decoder
+>
 class relay_simulation : public gauge::benchmark
 {
 public:
 
-    typedef basic_factory<Encoder,Decoder> factory_type;
+    using factory_type = basic_factory<Encoder, Decoder>;
 
 public:
 
@@ -210,8 +207,7 @@ public:
         add_configuration(cs);
 
         m_factory = std::make_shared<factory_type>(
-            symbols, symbol_size, m_generator);
-
+            Field, symbols, symbol_size, m_generator);
     }
 
 protected:
@@ -293,52 +289,38 @@ BENCHMARK_OPTION(relay_line)
     ("recode", default_recode,
      "Set true if the relay(s) should recode packets");
 
-
     gauge::runner::instance().register_options(options);
 }
 
-typedef relay_simulation<Encoder, Decoder> relay_fixture;
+using relay_fixture = relay_simulation<
+    fifi::api::field::binary,
+    kodo_rlnc::encoder,
+    kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
 {
     RUN
     {
-
         while (!m_sink->is_complete())
         {
             m_scheduler->tick();
         }
-
     }
 }
 
-typedef relay_simulation<Encoder8, Decoder8> relay_fixture8;
+using relay_fixture8 = relay_simulation<
+    fifi::api::field::binary8,
+    kodo_rlnc::encoder,
+    kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(relay_fixture8, Relay, binary8, 10)
 {
     RUN
     {
-
         while (!m_sink->is_complete())
         {
             m_scheduler->tick();
         }
-
-    }
-}
-
-typedef relay_simulation<Encoder16, Decoder16> relay_fixture16;
-
-BENCHMARK_F_INLINE(relay_fixture16, Relay, binary16, 10)
-{
-    RUN
-    {
-
-        while (!m_sink->is_complete())
-        {
-            m_scheduler->tick();
-        }
-
     }
 }
 

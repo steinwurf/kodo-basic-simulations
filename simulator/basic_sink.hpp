@@ -22,14 +22,16 @@ class basic_sink : public sink
 {
 public:
 
-    basic_sink(const std::string& id,
-               const std::shared_ptr<Decoder>& decoder) :
+    basic_sink(const std::string& id, std::shared_ptr<Decoder> decoder) :
         sink(id),
         m_decoder(decoder)
     {
         assert(m_decoder);
 
-        m_decode_buffer.resize(m_decoder->payload_size());
+        m_payload.resize(m_decoder->payload_size());
+
+        m_data.resize(m_decoder->block_size());
+        m_decoder->set_mutable_symbols(storage::storage(m_data));
     }
 
     void tick()
@@ -50,13 +52,11 @@ public:
             return;
         }
 
-        assert(m_decoder->payload_size() == payload.get_data_size());
-
         std::copy(payload.data_begin(), payload.data_end(),
-                  &m_decode_buffer[0]);
+                  &m_payload[0]);
 
         uint32_t rank = m_decoder->rank();
-        m_decoder->read_payload(&m_decode_buffer[0]);
+        m_decoder->read_payload(&m_payload[0]);
 
         if (m_decoder->rank() > rank)
         {
@@ -89,9 +89,11 @@ public:
 
 private:
 
+    // Data buffer for the decoder
+    std::vector<uint8_t> m_data;
 
     // Buffer for packets
-    std::vector<uint8_t> m_decode_buffer;
+    std::vector<uint8_t> m_payload;
 
     // The decoder
     std::shared_ptr<Decoder> m_decoder;

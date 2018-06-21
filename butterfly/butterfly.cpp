@@ -6,8 +6,6 @@
 #include <ctime>
 #include <string>
 
-#include "../simulator/simulator.hpp"
-
 #include <gauge/gauge.hpp>
 #include <gauge/python_printer.hpp>
 #include <gauge/console_printer.hpp>
@@ -15,7 +13,11 @@
 
 #include <boost/random/mersenne_twister.hpp>
 
-#include <kodo_rlnc/full_vector_codes.hpp>
+#include <fifi/api/field.hpp>
+
+#include <kodo_rlnc/coders.hpp>
+
+#include "../simulator/simulator.hpp"
 
 // Helper function to convert to string
 template<class T>
@@ -25,16 +27,6 @@ std::string to_string(T t)
     ss << t;
     return ss.str();
 }
-
-// The encoders and decoders that we use from the Kodo library
-typedef kodo_rlnc::full_vector_encoder<fifi::binary> Encoder;
-typedef kodo_rlnc::full_vector_decoder<fifi::binary> Decoder;
-
-typedef kodo_rlnc::full_vector_encoder<fifi::binary8> Encoder8;
-typedef kodo_rlnc::full_vector_decoder<fifi::binary8> Decoder8;
-
-typedef kodo_rlnc::full_vector_encoder<fifi::binary16> Encoder16;
-typedef kodo_rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 
 // The simple butterfly simulation for the following topology:
 //             +--------+
@@ -65,12 +57,17 @@ typedef kodo_rlnc::full_vector_decoder<fifi::binary16> Decoder16;
 //
 // The simulator uses the gauge benchmarking tool for
 // driving and providing options to the simulations.
-template<class Encoder, class Decoder>
+template
+<
+    fifi::api::field Field,
+    class Encoder,
+    class Decoder
+>
 class butterfly : public gauge::benchmark
 {
 public:
 
-    using factory_type = basic_factory<Encoder,Decoder>;
+    using factory_type = basic_factory<Encoder, Decoder>;
 
 public:
 
@@ -191,11 +188,9 @@ public:
     /// configurations.
     void get_options(gauge::po::variables_map& options)
     {
-        auto symbols =
-            options["symbols"].as<uint32_t>();
+        auto symbols = options["symbols"].as<uint32_t>();
 
-        auto symbol_size =
-            options["symbol_size"].as<uint32_t>();
+        auto symbol_size = options["symbol_size"].as<uint32_t>();
 
         auto recode = options["recode"].as<bool>();
 
@@ -207,8 +202,7 @@ public:
         add_configuration(cs);
 
         m_factory = std::make_shared<factory_type>(
-            symbols, symbol_size, m_generator);
-
+            Field, symbols, symbol_size, m_generator);
     }
 
 protected:
@@ -220,7 +214,6 @@ protected:
     std::shared_ptr<tick_scheduler> m_scheduler;
 
     std::shared_ptr<factory_type> m_factory;
-
 };
 
 BENCHMARK_OPTION(butterfly)
@@ -239,52 +232,40 @@ BENCHMARK_OPTION(butterfly)
     ("recode", gauge::po::value<bool>()->default_value(true),
      "Set true if the relay(s) should recode packets");
 
-
     gauge::runner::instance().register_options(options);
 }
 
-typedef butterfly<Encoder, Decoder> butterfly_fixture;
+using butterfly_fixture = butterfly<
+    fifi::api::field::binary,
+    kodo_rlnc::encoder,
+    kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
 {
     RUN
     {
-
         while (!(m_s1->is_complete() && m_s2->is_complete()))
         {
             m_scheduler->tick();
         }
-
     }
 }
 
-// typedef butterfly_simulation<Encoder8, Decoder8> butterfly_fixture8;
+using butterfly_fixture8 = butterfly<
+    fifi::api::field::binary8,
+    kodo_rlnc::encoder,
+    kodo_rlnc::decoder>;
 
-// BENCHMARK_F_INLINE(butterfly_fixture8, Butterfly, binary8, 10)
-// {
-//     RUN{
-
-//         while(!m_sink->is_complete())
-//         {
-//             m_scheduler->tick();
-//         }
-
-//     }
-// }
-
-// typedef butterfly_simulation<Encoder16, Decoder16> butterfly_fixture16;
-
-// BENCHMARK_F_INLINE(butterfly_fixture16, Butterfly, binary16, 10)
-// {
-//     RUN{
-
-//         while(!m_sink->is_complete())
-//         {
-//             m_scheduler->tick();
-//         }
-
-//     }
-// }
+BENCHMARK_F_INLINE(butterfly_fixture8, Butterfly, binary8, 10)
+{
+    RUN
+    {
+        while (!(m_s1->is_complete() && m_s2->is_complete()))
+        {
+            m_scheduler->tick();
+        }
+    }
+}
 
 int main(int argc, const char* argv[])
 {
