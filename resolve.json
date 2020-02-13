@@ -12,7 +12,7 @@
         "name": "boost",
         "resolver": "git",
         "method": "semver",
-        "major": 3,
+        "major": 4,
         "sources": [
             "github.com/steinwurf/boost.git"
         ]
@@ -21,7 +21,7 @@
         "name": "kodo-rlnc",
         "resolver": "git",
         "method": "semver",
-        "major": 13,
+        "major": 16,
         "sources": [
             "github.com/steinwurf/kodo-rlnc.git"
         ]
@@ -30,7 +30,7 @@
         "name": "tables",
         "resolver": "git",
         "method": "semver",
-        "major": 7,
+        "major": 8,
         "sources": [
             "github.com/steinwurf/tables.git"
         ]
@@ -40,7 +40,7 @@
         "internal": true,
         "resolver": "git",
         "method": "semver",
-        "major": 11,
+        "major": 12,
         "sources": [
             "github.com/steinwurf/gauge.git"
         ]
