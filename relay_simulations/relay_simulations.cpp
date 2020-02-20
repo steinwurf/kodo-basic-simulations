@@ -11,7 +11,7 @@
 #include <gauge/console_printer.hpp>
 #include <gauge/csv_printer.hpp>
 
-#include <fifi/api/field.hpp>
+#include <fifi/finite_field.hpp>
 
 #include <kodo_rlnc/coders.hpp>
 
@@ -49,7 +49,7 @@ std::string to_string(T t)
 // driving and providing options to the simulations.
 template
 <
-    fifi::api::field Field,
+    fifi::finite_field Field,
     class Encoder,
     class Decoder
 >
@@ -84,7 +84,6 @@ public:
     void setup()
     {
         gauge::config_set cs = get_current_configuration();
-
 
         double error_source_sink = cs.get_value<double>("error_source_sink");
         double error_source_relay = cs.get_value<double>("error_source_relay");
@@ -294,7 +293,7 @@ BENCHMARK_OPTION(relay_line)
 
 using relay_fixture =
     relay_simulation<
-    fifi::api::field::binary, kodo_rlnc::encoder, kodo_rlnc::decoder>;
+    fifi::finite_field::binary, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
 {
@@ -309,7 +308,7 @@ BENCHMARK_F_INLINE(relay_fixture, Relay, binary, 10)
 
 using relay_fixture8 =
     relay_simulation<
-    fifi::api::field::binary8, kodo_rlnc::encoder, kodo_rlnc::decoder>;
+    fifi::finite_field::binary8, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(relay_fixture8, Relay, binary8, 10)
 {

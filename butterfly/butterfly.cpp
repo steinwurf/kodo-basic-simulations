@@ -13,7 +13,7 @@
 
 #include <boost/random/mersenne_twister.hpp>
 
-#include <fifi/api/field.hpp>
+#include <fifi/finite_field.hpp>
 
 #include <kodo_rlnc/coders.hpp>
 
@@ -59,7 +59,7 @@ std::string to_string(T t)
 // driving and providing options to the simulations.
 template
 <
-    fifi::api::field Field,
+    fifi::finite_field Field,
     class Encoder,
     class Decoder
 >
@@ -237,7 +237,7 @@ BENCHMARK_OPTION(butterfly)
 
 using butterfly_fixture =
     butterfly<
-    fifi::api::field::binary, kodo_rlnc::encoder, kodo_rlnc::decoder>;
+    fifi::finite_field::binary, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
 {
@@ -252,7 +252,7 @@ BENCHMARK_F_INLINE(butterfly_fixture, Butterfly, binary, 10)
 
 using butterfly_fixture8 =
     butterfly<
-    fifi::api::field::binary8, kodo_rlnc::encoder, kodo_rlnc::decoder>;
+    fifi::finite_field::binary8, kodo_rlnc::encoder, kodo_rlnc::decoder>;
 
 BENCHMARK_F_INLINE(butterfly_fixture8, Butterfly, binary8, 10)
 {

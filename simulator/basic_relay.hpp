@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include <boost/shared_ptr.hpp>
-
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include <tables/table.hpp>
 
@@ -31,13 +30,12 @@ public:
     {
         assert(m_decoder);
 
-        m_recode_buffer.resize(m_decoder->payload_size());
-        m_decode_buffer.resize(m_decoder->payload_size());
+        m_recode_buffer.resize(m_decoder->max_payload_size());
+        m_decode_buffer.resize(m_decoder->max_payload_size());
 
         m_data.resize(m_decoder->block_size());
-        m_decoder->set_mutable_symbols(storage::storage(m_data));
+        m_decoder->set_symbols_storage(m_data.data());
     }
-
 
     virtual void receive(packet payload)
     {
@@ -57,7 +55,7 @@ public:
                       &m_decode_buffer[0]);
 
             uint32_t rank = m_decoder->rank();
-            m_decoder->read_payload(&m_decode_buffer[0]);
+            m_decoder->consume_payload(&m_decode_buffer[0]);
 
             if (rank < m_decoder->rank())
             {
@@ -89,7 +87,7 @@ public:
         // 2) We always transmit on every tick
         if (m_recode_on)
         {
-            m_decoder->write_payload(&m_recode_buffer[0]);
+            m_decoder->produce_payload(&m_recode_buffer[0]);
             packet p(m_recode_buffer);
             p.set_sender(node_id());
             forward_packet(p);
@@ -175,5 +173,4 @@ private:
     /// We store the last packet for forwarding
     bool m_new_packet;
     packet m_last_packet;
-
 };
