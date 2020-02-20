@@ -7,6 +7,9 @@ of every change, see the Git log.
 Latest
 ------
 * tbd
+
+3.0.0
+-----
 * Major: Upgrade to kodo-rlnc 16
 * Major: Upgrade to boost 4
 * Major: Upgrade to tables 8
