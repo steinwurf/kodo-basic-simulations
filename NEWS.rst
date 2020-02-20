@@ -9,6 +9,8 @@ Latest
 * tbd
 * Major: Upgrade to kodo-rlnc 16
 * Major: Upgrade to boost 4
+* Major: Upgrade to tables 8
+* Minor: Upgrade to gauge 12
 
 2.0.0
 -----
