@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <fifi/api/field.hpp>
+#include <fifi/finite_field.hpp>
 
 /// Helper class which makes it a bit more convenient to build
 /// the elements of a basic simulation
@@ -15,10 +15,9 @@ class basic_factory
 public:
 
     basic_factory(
-        fifi::api::field field, uint32_t symbols, uint32_t symbol_size,
+        fifi::finite_field field, uint32_t symbols, uint32_t symbol_size,
         boost::random::mt19937& random_generator) :
-        m_decoder_factory(field, symbols, symbol_size),
-        m_encoder_factory(field, symbols, symbol_size),
+        m_field(field), m_symbols(symbols), m_symbol_size(symbol_size),
         m_random_generator(random_generator)
     {
     }
@@ -38,7 +37,8 @@ public:
     std::shared_ptr<basic_sink<Decoder> >
     build_sink(const std::string& id)
     {
-        auto decoder = m_decoder_factory.build();
+        auto decoder =
+            std::make_shared<Decoder>(m_field, m_symbols, m_symbol_size);
         auto sink = std::make_shared< basic_sink<Decoder> >(id, decoder);
 
         return sink;
@@ -47,7 +47,8 @@ public:
     std::shared_ptr<basic_relay<Decoder> >
     build_relay(const std::string& id)
     {
-        auto decoder = m_decoder_factory.build();
+        auto decoder =
+            std::make_shared<Decoder>(m_field, m_symbols, m_symbol_size);
         auto relay = std::make_shared< basic_relay<Decoder> >(id, decoder);
 
         return relay;
@@ -56,7 +57,8 @@ public:
     std::shared_ptr<basic_source<Encoder> >
     build_source(const std::string& id)
     {
-        auto encoder = m_encoder_factory.build();
+        auto encoder =
+            std::make_shared<Encoder>(m_field, m_symbols, m_symbol_size);
         auto source = std::make_shared< basic_source<Encoder> >(id, encoder);
 
         return source;
@@ -71,18 +73,21 @@ private:
 
     std::shared_ptr<random_bool> build_random_bool(double success_probability)
     {
-        return std::make_shared<random_bool>(std::ref(m_random_generator),
-                                             success_probability);
+        return std::make_shared<random_bool>(
+            std::ref(m_random_generator), success_probability);
     }
 
 
 private:
 
-    /// Factory for building decoders
-    typename Decoder::factory m_decoder_factory;
+    /// The finite field for coders
+    fifi::finite_field m_field;
 
-    /// Factory for building encoders
-    typename Encoder::factory m_encoder_factory;
+    /// The number of symbols for coders
+    uint32_t m_symbols;
+
+    /// The symbol size for coders
+    uint32_t m_symbol_size;
 
     /// The random generator
     boost::random::mt19937& m_random_generator;

@@ -5,9 +5,9 @@
 
 #pragma once
 
+#include <memory>
 #include <vector>
 
-#include <boost/shared_ptr.hpp>
 #include <tables/table.hpp>
 
 #include "node.hpp"

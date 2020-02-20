@@ -5,11 +5,11 @@
 
 #pragma once
 
-#include <boost/shared_ptr.hpp>
 
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include <tables/table.hpp>
 
@@ -28,10 +28,10 @@ public:
     {
         assert(m_decoder);
 
-        m_payload.resize(m_decoder->payload_size());
+        m_payload.resize(m_decoder->max_payload_size());
 
         m_data.resize(m_decoder->block_size());
-        m_decoder->set_mutable_symbols(storage::storage(m_data));
+        m_decoder->set_symbols_storage(m_data.data());
     }
 
     void tick()
@@ -56,7 +56,7 @@ public:
                   &m_payload[0]);
 
         uint32_t rank = m_decoder->rank();
-        m_decoder->read_payload(&m_payload[0]);
+        m_decoder->consume_payload(&m_payload[0]);
 
         if (m_decoder->rank() > rank)
         {

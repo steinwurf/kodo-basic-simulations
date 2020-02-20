@@ -26,14 +26,14 @@ public:
         m_encoder(encoder)
     {
         assert(m_encoder);
-        m_payload.resize(m_encoder->payload_size());
+        m_payload.resize(m_encoder->max_payload_size());
 
         m_data.resize(m_encoder->block_size());
 
         for (auto& d : m_data)
             d = rand() % 256;
 
-        m_encoder->set_const_symbols(storage::storage(m_data));
+        m_encoder->set_symbols_storage(m_data.data());
     }
 
     void tick()
@@ -42,7 +42,7 @@ public:
         {
             ++m_counter["source_sent"];
 
-            m_encoder->write_payload(&m_payload[0]);
+            m_encoder->produce_payload(&m_payload[0]);
 
             packet p(m_payload);
             p.set_sender(node_id());
@@ -52,14 +52,12 @@ public:
 
     void systematic_off()
     {
-        if (m_encoder->has_systematic_mode())
-            m_encoder->set_systematic_off();
+        m_encoder->set_systematic_off();
     }
 
     void systematic_on()
     {
-        if (m_encoder->has_systematic_mode())
-            m_encoder->set_systematic_on();
+        m_encoder->set_systematic_on();
     }
 
     void store_run(tables::table& results)
